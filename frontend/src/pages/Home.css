@@ -1,0 +1,40 @@
+.home-wrapper {
+    padding: 40px;
+    font-family: cursive;
+    background-color: white;
+    min-height: 100vh;
+}
+
+.home-header {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.home-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.youtube-box {
+    width: 640px;
+    height: 360px;
+    background-color: #d1d1d1;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.youtube-logo {
+    width: 100px;
+}
+
+.side-box {
+    width: 320px;
+}
