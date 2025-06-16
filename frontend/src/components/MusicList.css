@@ -1,0 +1,48 @@
+.musiclist-wrapper {
+    width: 320px;
+    background-color: #eee;
+    border-radius: 20px;
+    padding: 20px 16px;
+    position: relative;
+    font-family: cursive;
+}
+
+.newpost-button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: limegreen;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.musiclist-ul {
+    margin-top: 60px;
+    list-style: none;
+    padding: 0;
+}
+
+.musiclist-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.musiclist-item .title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.musiclist-item .time {
+    font-size: 12px;
+    color: #555;
+}
+
+.scroll-anchor {
+    height: 1px;
+}
