@@ -1,15 +1,16 @@
 import './App.css'
-import Header from './components/Header'
-import Main from './components/Main'
-import Footer from './components/Footer'
+import {Routes, Route, Link} from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import Home from "./pages/Home";
+import Notfound from './pages/Notfound';
 
 function App() {
   return (
-    <>
-      <Header />
-      <Main />
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/LoginPage" element={<LoginPage />} />
+      <Route path="/" element={<Home />} />
+      <Route path="*" element={<Notfound />} />
+    </Routes>
   );
 }
 
