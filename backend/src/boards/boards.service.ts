@@ -41,4 +41,6 @@ export class BoardsService {//데이터베이스 작업
         board.status = status;
         return board;
     }
+    
+    
 }
