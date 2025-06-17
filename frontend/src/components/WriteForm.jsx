@@ -9,16 +9,29 @@ const WriteForm = ({ onSubmit, onCancel }) => {
 
   const handleSave = () => {
     if (!title.trim()) return;
-    onSubmit({ title, detail, photo });
+    const now = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+  
+    const newPost = {
+      title,
+      detail,
+      photo,
+      userId,
+      time: now,
+    };
+  
+    onSubmit(newPost);        // Home에 post 전달
+    alert("저장되었습니다");   // ✅ 알림 띄우기
+  
+    // 값 초기화 (선택)
     setTitle('');
     setDetail('');
+    setUserId('');
     setPhoto(null);
   };
-
   return (
     <div className="write-form-container">
 
-      <div className="user-meta">
+<div className="user-meta">
         <input
           className="user-input"
           type="text"
@@ -41,7 +54,9 @@ const WriteForm = ({ onSubmit, onCancel }) => {
       {/* 이미지 업로드 */}
       <div className="photo-preview">
         {photo ? (
-          <img src={URL.createObjectURL(photo)} alt="preview" />
+          <div className="photo-container">
+            <img src={URL.createObjectURL(photo)} alt="preview" />
+          </div>
         ) : (
           <label className="photo-placeholder">
             photo

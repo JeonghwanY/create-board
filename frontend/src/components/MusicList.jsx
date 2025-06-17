@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import "./MusicList.css";
 
-const MusicList = ({ list, onWriteClick, onLoadMore }) => {
+const MusicList = ({ list, onWriteClick, onLoadMore,onItemClick }) => {
     const observerTarget = useRef(null);
 
     useEffect(() => {
@@ -21,9 +21,13 @@ const MusicList = ({ list, onWriteClick, onLoadMore }) => {
 
             <ul className="musiclist-ul">
                 {list.map((item, idx) => (
-                    <li key={idx} className="musiclist-item">
+                    <li key={idx} 
+                    className="musiclist-item"
+                    onClick={() => onItemClick && onItemClick(item)}>
                         <span className="title">{item.title}</span>
                         <span className="time">{item.time}</span>
+                        {/* setSelectedPost(item);
+                        setMode('detail');  */}
                     </li>
                 ))}
             </ul>

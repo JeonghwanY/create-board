@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import MusicList from '../components/MusicList';
 import WriteForm from '../components/WriteForm';
-import './Home.css'; // ✅ CSS 불러오기
+import PostDetail from '../components/PostDetail';
+import './Home.css'; 
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
         { title: 'title', time: '15시간 전' },
         { title: 'title', time: 'x월 x일' },
     ]);
+    const [selectedPost, setSelectedPost] = useState(null);
 
     const addPost = ({ title }) => {
         const now = new Date();
@@ -20,6 +22,12 @@ const Home = () => {
         setList((prev) => [newItem, ...prev]);  // 최신 글을 위로
         setMode('list');
     };
+
+    const handlePostSubmit = (newPost) => {
+        setList([newPost, ...list]);   // 목록 추가
+        setSelectedPost(null);         // 바로 디테일로 가지 않도록
+        setMode('list');               // 메인 목록 화면으로 전환
+      };
 
     return (
         <div className="home-wrapper">
@@ -37,11 +45,18 @@ const Home = () => {
 
                 {/* 오른쪽: MusicList 또는 작성창 */}
                 <div className="side-box">
-                    {mode === 'list' ? (
-                        <MusicList list={list} onWriteClick={() => setMode('write')} />
+                    {selectedPost ? (
+                        <PostDetail post={selectedPost} onBack={() => setSelectedPost(null)} />
+                    ) : mode === 'list' ? (
+                        <MusicList
+                            list={list}
+                            onWriteClick={() => setMode('write')}
+                            onItemClick={(item) => setSelectedPost(item)}
+                        />
                     ) : (
-                        <WriteForm onSubmit={addPost} onCancel={() => setMode('list')} />
+                        <WriteForm onSubmit={handlePostSubmit} onCancel={() => setMode('list')} />
                     )}
+
                 </div>
             </div>
         </div>
