@@ -33,3 +33,10 @@
     margin-bottom: 10px;
     position: relative; /* 메뉴 드롭다운을 위한 기준점 */
 }
+
+.photo-box img {
+    max-width: 100%;     /* 부모 너비를 넘지 않게 */
+    height: auto;        /* 비율 유지 */
+    border-radius: 8px;  /* 선택: 모서리 둥글게 */
+    object-fit: contain; /* 이미지 비율 유지하면서 박스 안에 맞춤 */
+}

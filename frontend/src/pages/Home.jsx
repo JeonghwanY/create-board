@@ -27,7 +27,7 @@ const Home = () => {
         setList([newPost, ...list]);   // 목록 추가
         setSelectedPost(null);         // 바로 디테일로 가지 않도록
         setMode('list');               // 메인 목록 화면으로 전환
-      };
+    };
 
     return (
         <div className="home-wrapper">
