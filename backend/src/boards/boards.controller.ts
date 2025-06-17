@@ -38,6 +38,11 @@ export class BoardsController {
     // getBoardById(@Param('id') id: string): Board {
     //     return this.boardsService.getBoardById(id)
     // }
+    @Delete('/:id')//아이디 값 기반으로 싹 다 지움.
+    //param으로 아이디 가져옴 , ParseIntPipe : 메소드로 오는 파라미터가 숫자로 잘 되어 오는지 확인.
+    deleteBoard(@Param('id', ParseIntPipe) id): Promise<void>{//Promise -> 결과값은void 형이여야함
+        return this.boardsService.deleteBoard(id);//서비스에 있는 deleteBoard(id)의 값을 리턴
+    }
 
     // @Delete('/:id')
     // deleteBoard(@Param('id') id: string): void{

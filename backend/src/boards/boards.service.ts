@@ -18,7 +18,16 @@ export class BoardsService {//데이터베이스 작업
     // getAllBoards(): Board[]{
     //     return this.boards;
     // }
-
+    async createBoard(createBoardDto: CreateBoardDto): Promise<Board>{
+        const {title, description} = createBoardDto;
+        const board = this.boardRepository.create({
+            title,
+            description,
+            status: BoardStatus.PUBLIC
+        })
+        await this.boardRepository.save(board);
+        return board;
+    }
     // createBoard(createBoardDto: CreateBoardDto){
     //     //const title = createBoardDto.title;
     //     const {title,description} = createBoardDto;
@@ -31,18 +40,6 @@ export class BoardsService {//데이터베이스 작업
     //     this.boards.push(board);
     //     return board;
     // }
-
-    async createBoard(createBoardDto: CreateBoardDto): Promise<Board>{
-        const {title, description} = createBoardDto;
-        const board = this.boardRepository.create({
-            title,
-            description,
-            status: BoardStatus.PUBLIC
-        })
-        await this.boardRepository.save(board);
-        return board;
-    }
-
     async getBoardById(id: number): Promise <Board>{
         const found = await this.boardRepository.findOne({where: { id } });//id에 맞는 게시물 찾기
 
@@ -58,7 +55,13 @@ export class BoardsService {//데이터베이스 작업
     //     }
     //     return board;
     // }  
-
+    async deleteBoard(id: number): Promise<void>{//리턴값은 promise(void)로 
+        const result = await this.boardRepository.delete(id);
+        if(result.affected === 0){
+            throw new NotFoundException(`Can't find Board with id ${id}`)
+        }
+        //console.log('result',result);
+    }
     // deleteBoard(id: string): void{
     //     const found = this.getBoardById(id);//없는 게시물을 지우려 할 때 결과 값 처리 . 지우려는 게시물이 있는지 체크하고 있으면 지우고 없으면 에러문구 등장
     //     this.boards = this.boards.filter((board) => board.id !== found.id)
