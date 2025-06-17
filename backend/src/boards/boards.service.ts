@@ -35,8 +35,9 @@ export class BoardsService {//데이터베이스 작업
         return found;
     }
  
-    async deleteBoard(id: number): Promise<void>{//리턴값은 promise(void)로 
-        const result = await this.boardRepository.delete(id);
+    async deleteBoard(id: number, user: User): Promise<void>{//리턴값은 promise(void)로 
+        //자신이 만든 게시물을 삭제
+        const result = await this.boardRepository.delete({id, user});
         if(result.affected === 0){
             throw new NotFoundException(`Can't find Board with id ${id}`)
         }
