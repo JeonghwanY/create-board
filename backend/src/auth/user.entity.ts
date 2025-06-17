@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Board } from "src/boards/board.entity";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()//이 클래스가 entity로 지정시키기 위해서
 //@Unique(['username','email'])//username이 유니크한 값을 가지게 된다
@@ -14,4 +15,7 @@ export class User extends BaseEntity{
 
     @Column()
     password: string;
+
+    @OneToMany(type => Board, board => board.user, { eager: true})
+    boards: Board[]
 }
