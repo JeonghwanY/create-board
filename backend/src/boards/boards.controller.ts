@@ -49,6 +49,14 @@ export class BoardsController {
     //     this.boardsService.deleteBoard(id);
     // }
 
+    @Patch('/:id/status')
+    updateBoardStatus(
+        @Param('id',ParseIntPipe) id: number,
+        @Body('status',BoardStatusValidationPipe) status: BoardStatus
+    ) {
+        return this.boardsService.updateBoardStatus(id,status);
+    }
+
     // @Patch('/:id/status')
     // updateBoardStatus(
     //     @Param('id') id: string,
@@ -56,9 +64,12 @@ export class BoardsController {
     // ) {
     //     return this.boardsService.updateBoardStatus(id,status);
     // }
-
     // @Get(':id')
     // findOne(@Param('id',ParseIntPipe) id: number){
     //     return ;
     // }
+    @Get()
+    getAllBoard(): Promise<Board[]> {//db에 있는 전체내용 가져옴
+        return this.boardsService.getAllBoards();
+    }
 }

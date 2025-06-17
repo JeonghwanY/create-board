@@ -66,12 +66,21 @@ export class BoardsService {//데이터베이스 작업
     //     const found = this.getBoardById(id);//없는 게시물을 지우려 할 때 결과 값 처리 . 지우려는 게시물이 있는지 체크하고 있으면 지우고 없으면 에러문구 등장
     //     this.boards = this.boards.filter((board) => board.id !== found.id)
     // }
-    
+    async updateBoardStatus(id: number, status: BoardStatus): Promise<Board>{
+        const board = await this.getBoardById(id);
+
+        board.status = status;
+        await this.boardRepository.save(board);
+        return board;
+    }
     // updateBoardStatus(id: string, status: BoardStatus): Board{
     //     const board = this.getBoardById(id);
     //     board.status = status;
     //     return board;
     // }
+    async getAllBoards(): Promise <Board[]> {
+        return this.boardRepository.find();//모든 게시물을 가져오는거라 find안에 아무것도 안넣는다
+    }
     
     
 }
