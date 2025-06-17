@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BoardsService } from './boards.service';
-import { Board, BoardStatus } from './board.model';
+import {  BoardStatus } from './board.status.enum';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
+import { Board } from './board.entity';
 
 @Controller('boards')
 export class BoardsController {
@@ -20,6 +21,19 @@ export class BoardsController {
     // ): Board{
     //     return this.boardsService.createBoard(createBoardDto);    
     // }
+
+    @Post()
+    @UsePipes(ValidationPipe)
+    createBoard(@Body() CreateBoardDto: CreateBoardDto):Promise<Board>{
+        return this.boardsService.createBoard(CreateBoardDto);
+    }
+
+
+
+    @Get('/:id')
+    getBoardById(@Param('id') id:number) : Promise <Board> {//param으로 받아온 아이디를 리턴에 넣어줘서 db에서 findOne 메소드를 이용해서 원하는 게시물을 찾을 수 있다.
+        return this.boardsService.getBoardById(id)
+    }
     // @Get('/:id')
     // getBoardById(@Param('id') id: string): Board {
     //     return this.boardsService.getBoardById(id)
