@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn } from "typeorm";
-import { Board } from "../boards/board.entity";
+import { Post } from "../posts/post.entity";
 import { User } from "../auth/user.entity";
 
 @Entity()
@@ -8,7 +8,7 @@ export class Comment extends BaseEntity {
     cid: number;
 
     @Column()
-    pid: number; // 게시글 ID (Board의 id를 참조)
+    pid: number; // 게시글 ID (Post의 pid를 참조)
 
     @Column('text')
     c_detail: string; // 댓글 내용
@@ -20,9 +20,9 @@ export class Comment extends BaseEntity {
     c_writer: string; // 댓글 작성자 (User의 username을 참조)
 
     // 관계 설정
-    @ManyToOne(() => Board, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'pid' })
-    board: Board;
+    @ManyToOne(() => Post, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'pid', referencedColumnName: 'pid' })
+    post: Post;
 
     @ManyToOne(() => User, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'c_writer', referencedColumnName: 'username' })
