@@ -34,6 +34,7 @@
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 .photo-container {
     width: 100%;
 
@@ -52,6 +53,8 @@
     /* 비율 유지하며 꽉 채움 */
 }
 
+=======
+>>>>>>> min
 .detail-input {
     width: 100%;
     height: 80px;
@@ -87,11 +90,18 @@
     border: none;
     border-radius: 6px;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> min
 .user-input {
     width: 100%;
     padding: 6px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> min

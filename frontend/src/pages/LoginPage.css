@@ -1,4 +1,4 @@
-.login-container {
+/* .login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,4 +36,59 @@
     border-radius: 20px;
     background-color: #eee;
     cursor: pointer;
+}
+ */
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+    font-family: 'Arial', sans-serif;
+}
+
+.title {
+    font-size: 4em;
+    font-family: 'Cursive', sans-serif;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 3.5em;
+    font-weight: bold;
+    margin: 10px 0 30px 0;
+    font-family: 'Cursive', sans-serif;
+}
+
+.input-box {
+    width: 450px;
+    height: 50px;
+    margin: 18px 0;
+    font-size: 1.4rem;
+    padding: 0 10px;
+    border: 2px solid red; /* 빨간 테두리 */
+    border-radius: 5px;
+    outline: none;
+    color: #333;
+}
+
+.input-box::placeholder {
+    color: #aaa;
+    text-align: center;
+}
+
+.button {
+    width: 200px;
+    height: 40px;
+    margin: 10px 0;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0e0e0; /* 연한 회색 */
+    color: #000;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #d3d3d3;
 }
