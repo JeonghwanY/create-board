@@ -1,14 +1,15 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()//이 클래스가 entity로 지정시키기 위해서
+//@Unique(['username','email'])//username이 유니크한 값을 가지게 된다
 export class User extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({unique: true})//이게 유니크한 값을 주는 것 unique: true
     email: string;
 
-    @Column()
+    @Column({unique: true})
     username: string;
 
     @Column()
