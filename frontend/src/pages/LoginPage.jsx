@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
+import VerifyEmailModal from "../components/VerifyEmail";
 
 function LoginPage() {
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
     const navigate = useNavigate()
+    const [showModal, setShowModal] = useState(false);
 
     /*/////////////////////////////////////로그인 fecth 로직///////////////////////////////*/
     const handleLogin = async () => {
@@ -15,7 +17,7 @@ function LoginPage() {
         }
 
         try {
-            const res = await fetch("/api/auth/login", {
+            const res = await fetch("/api/auth/login", { //로그인
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -64,6 +66,10 @@ function LoginPage() {
             />
             <button className="button" onClick={handleLogin}>로그인</button>
             <button className="button" onClick={() => navigate("/register")}>회원가입</button>
+            <button className="button" onClick={() => setShowModal(true)}>
+                ID/PW 찾기
+            </button>
+            {showModal && <VerifyEmailModal onClose={() => setShowModal(false)} />}
         </div>
     );
 }

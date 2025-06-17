@@ -1,7 +1,7 @@
 import './App.css'
 import {Routes, Route, Link} from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from './pages/RegisterPage';
 import Home from "./pages/Home";
 import Notfound from './pages/Notfound';
 

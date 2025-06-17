@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./RegisterPage.css";
 
 function RegisterPage() {
@@ -7,9 +8,11 @@ function RegisterPage() {
     const [username, setUsername] = useState("");
     const [emailChecked, setEmailChecked] = useState(false);
 
+    const navigate = useNavigate();
+
     const checkEmailDuplicate = async () => {
         try {
-            const res = await fetch("/api/auth/check", {
+            const res = await fetch("/api/auth/check", {  //이메일 중복 검사(회원가입)
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email })
@@ -38,7 +41,7 @@ function RegisterPage() {
         }
 
         try {
-            const res = await fetch("/api/auth/register", {
+            const res = await fetch("/api/auth/register", { //회원 가입 
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password, username })
@@ -50,8 +53,9 @@ function RegisterPage() {
             }
 
             const data = await res.json();
-            alert("회원가입 성공! 로그인 페이지로 이동하세요.");
-            console.log(data);
+            alert("회원가입 성공! 로그인 페이지로 이동합니다.");
+            navigate("/")
+            // console.log(data);
             // window.location.href = "/login";
         } catch (err) {
             console.error(err);
