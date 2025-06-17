@@ -25,7 +25,7 @@ import { Post } from './post.entity';
 export class PostsController {
     constructor(private postsService: PostsService) {}
 
-    // 게시글 작성 API (이미지 업로드 포함)
+    // 게시글 작성 API (이미지 선택적 업로드)
     @HttpPost()
     @UsePipes(ValidationPipe)
     @UseInterceptors(FileInterceptor('picture', {
@@ -51,7 +51,7 @@ export class PostsController {
         @Body() createPostDto: CreatePostDto,
         @UploadedFile() file?: Express.Multer.File
     ): Promise<Post> {
-        const picturePath = file ? `/uploads/${file.filename}` : undefined;
+        const picturePath = file ? `/uploads/${file.filename}` : null;
         return this.postsService.createPost(createPostDto, picturePath);
     }
 
@@ -98,7 +98,7 @@ export class PostsController {
         @Body('writer') writer: string, // 작성자 검증을 위한 필드 추가
         @UploadedFile() file?: Express.Multer.File
     ): Promise<Post> {
-        const picturePath = file ? `/uploads/${file.filename}` : undefined;
+        const picturePath = file ? `/uploads/${file.filename}` : null;
         return this.postsService.updatePost(pid, updatePostDto, writer, picturePath);
     }
 

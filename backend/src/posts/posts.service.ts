@@ -13,14 +13,14 @@ export class PostsService {
     ) {}
 
     // 게시글 작성
-    async createPost(createPostDto: CreatePostDto, picture?: string): Promise<Post> {
+    async createPost(createPostDto: CreatePostDto, picture?: string | null): Promise<Post> {
         const { title, detail, writer } = createPostDto;
         
         const post = this.postRepository.create({
             title,
             detail,
             writer,
-            picture: picture || undefined,
+            picture: picture || null,
         });
 
         await this.postRepository.save(post);
@@ -60,7 +60,7 @@ export class PostsService {
     }
 
     // 게시글 수정 (작성자 검증 포함)
-    async updatePost(pid: number, updatePostDto: UpdatePostDto, requestWriter: string, picture?: string): Promise<Post> {
+    async updatePost(pid: number, updatePostDto: UpdatePostDto, requestWriter: string, picture?: string | null): Promise<Post> {
         const post = await this.getPostById(pid);
         
         // 작성자 검증: 요청자가 게시글 작성자와 일치하는지 확인
