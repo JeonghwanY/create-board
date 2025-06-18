@@ -10,6 +10,25 @@ const PostDetail = ({ post, onBack, currentUser }) => {
 
     const isAuthor = post.writer === currentUser; // 현재 유저가 작성자인가?
 
+    // 한국 시간으로 변환하는 함수
+    const formatKoreanTime = (dateString) => {
+        try {
+            const date = new Date(dateString);
+            // UTC 시간에 9시간을 더해 한국 시간으로 변환
+            const koreanTime = new Date(date.getTime() + (9 * 60 * 60 * 1000));
+            
+            return koreanTime.toLocaleString('ko-KR', {
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).replace(/\./g, '/').replace(/\s/g, ' ');
+        } catch (error) {
+            return dateString || 'Unknown';
+        }
+    };
+
     // ✅ 댓글 목록 가져오기
     useEffect(() => {
         const fetchComments = async () => {
@@ -28,24 +47,46 @@ const PostDetail = ({ post, onBack, currentUser }) => {
     const handleAddComment = async () => {
         if (!text.trim()) return;
 
+        console.log('댓글 작성 시도:', {
+            pid: post.pid,
+            c_detail: text,
+            c_writer: currentUser,
+            post: post
+        });
+
         try {
+            const requestBody = {
+                pid: post.pid,
+                c_detail: text,
+                c_writer: currentUser,
+            };
+            
+            console.log('요청 URL:', `${API_BASE}/comments`);
+            console.log('요청 본문:', requestBody);
+            
             const res = await fetch(`${API_BASE}/comments`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    pid: post.pid,
-                    c_detail: text,
-                    c_writer: currentUser,
-                }),
+                body: JSON.stringify(requestBody),
             });
 
-            if (!res.ok) throw new Error("댓글 작성 실패");
+            console.log('응답 상태:', res.status);
+            console.log('응답 OK:', res.ok);
+            
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error('댓글 작성 실패:', errorText);
+                throw new Error(`댓글 작성 실패: ${res.status} - ${errorText}`);
+            }
 
             const newComment = await res.json();
+            console.log('새로 생성된 댓글:', newComment);
+            
             setComments((prev) => [...prev, newComment]);
             setText('');
         } catch (err) {
-            alert("댓글 작성 중 오류 발생");
+            console.error('댓글 작성 중 오류:', err);
+            alert(`댓글 작성 중 오류 발생: ${err.message}`);
         }
     };
 
@@ -67,6 +108,22 @@ const PostDetail = ({ post, onBack, currentUser }) => {
             );
         } catch {
             alert("댓글 수정 실패");
+        }
+    };
+
+    // 댓글 삭제 요청
+    const handleDeleteComment = async (cid) => {
+        if (!window.confirm("댓글을 삭제하시겠습니까?")) return;
+
+        try {
+            const res = await fetch(`${API_BASE}/comments/${cid}`, {
+                method: "DELETE",
+            });
+            if (!res.ok) throw new Error("댓글 삭제 실패");
+
+            setComments((prev) => prev.filter((item) => item.cid !== cid));
+        } catch (err) {
+            alert("댓글 삭제 중 오류 발생");
         }
     };
 
@@ -132,16 +189,18 @@ const PostDetail = ({ post, onBack, currentUser }) => {
             </div>
 
             <div className="user-meta">
-                <span className="user">{post.userId || 'unknown'}</span>
-                <span className="time">{post.time}</span>
+                <span className="user">{post.userId || post.writer || 'unknown'}</span>
+                <span className="time">
+                    {post.koreanTime || formatKoreanTime(post.time || post.date)}
+                </span>
             </div>
 
             {post.picture && (
                 <div className="photo-box">
                     <img
                         src={
-                            typeof post.picture === 'string'
-                                ? post.picture
+                            post.picture.startsWith('http') || post.picture.startsWith('/uploads')
+                                ? post.picture.startsWith('http') ? post.picture : `http://localhost:3000${post.picture}`
                                 : URL.createObjectURL(post.picture)
                         }
                         alt="uploaded"
@@ -157,14 +216,16 @@ const PostDetail = ({ post, onBack, currentUser }) => {
                     <div key={cmt.cid || idx} className="comment-item">
                         <div className="comment-header">
                             <span className="comment-text">{cmt.c_detail}</span>
-                            {cmt.writer === currentUser && (
+                            {cmt.c_writer === currentUser && (
                                 <div className="comment-actions">
                                     <button className="edit-btn" onClick={() => handleEditComment(cmt)}>수정</button>
                                     <button className="delete-btn" onClick={() => handleDeleteComment(cmt.cid)}>삭제</button>
                                 </div>
                             )}
                         </div>
-                        <span className="comment-time">{cmt.time}</span>
+                        <span className="comment-time">
+                            {formatKoreanTime(cmt.time || cmt.c_date)}
+                        </span>
                     </div>
                 ))}
                 <div ref={commentEndRef} />

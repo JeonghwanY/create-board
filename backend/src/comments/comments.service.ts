@@ -16,14 +16,20 @@ export class CommentsService {
     async createComment(createCommentDto: CreateCommentDto): Promise<Comment> {
         const { pid, c_detail, c_writer } = createCommentDto;
         
+        console.log('댓글 작성 서비스 호출:', { pid, c_detail, c_writer });
+        
         const comment = this.commentRepository.create({
             pid,
             c_detail,
             c_writer,
         });
 
-        await this.commentRepository.save(comment);
-        return comment;
+        console.log('생성된 댓글 객체:', comment);
+        
+        const savedComment = await this.commentRepository.save(comment);
+        console.log('저장된 댓글:', savedComment);
+        
+        return savedComment;
     }
 
     // 특정 게시글의 댓글 조회

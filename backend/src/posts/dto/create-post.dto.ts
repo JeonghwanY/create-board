@@ -9,7 +9,5 @@ export class CreatePostDto {
     @IsNotEmpty()
     detail: string; // 게시글 내용
 
-    @IsString()
-    @IsNotEmpty()
-    writer: string; // 게시글 작성자
+    
 } 

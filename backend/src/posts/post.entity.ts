@@ -15,14 +15,15 @@ export class Post extends BaseEntity {
     @CreateDateColumn({ type: 'timestamp' })
     date: Date; // 작성 시간
 
-    @Column()
-    writer: string; // 게시글 작성자 (User의 username을 참조)
-
     @Column({ nullable: true })
-    picture: string | null; // 이미지 경로 (선택)
+    picture: string; // 이미지 경로 (선택)
 
-    // 관계 설정
-    @ManyToOne(() => User, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'writer', referencedColumnName: 'username' })
-    user: User;
+    @Column({ default: 'anonymous' })
+    writer: string; // 게시글 작성자
+
+    // 관계 설정 (선택적)
+    @ManyToOne(() => User, { nullable: true, onDelete: 'CASCADE' })
+    user?: User;
 } 
+// @Column()
+//     writer: string; // 게시글 작성자 (User의 username을 참조)
