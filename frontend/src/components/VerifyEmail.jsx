@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./VerifyEmail.css";
+const API_BASE = "http://localhost:3000";
 
 const VerifyEmailModal = ({ onClose }) => {
     const [email, setEmail] = useState("");
@@ -7,7 +8,7 @@ const VerifyEmailModal = ({ onClose }) => {
 
     const handleVerify = async () => {
         try {
-            const res = await fetch("/api/auth/verify-email", {
+            const res = await fetch(`${API_BASE}/api/auth/verify-email`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
