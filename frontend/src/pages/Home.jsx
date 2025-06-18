@@ -15,7 +15,7 @@ const Home = () => {
 
     const fetchPosts = async () => {
     try {
-        const res = await fetch(`/posts?page=${page}&limit=10`); // 프록시 설정을 통해 백엔드로 전달
+        const res = await fetch(`http://localhost:3000/posts?page=${page}&limit=10`); // 프록시 설정을 통해 백엔드로 전달
         if (!res.ok) throw new Error("불러오기 실패");
         const data = await res.json();
         setList(prev => [...prev, ...data.posts]); // 게시글 누적
@@ -27,6 +27,7 @@ const Home = () => {
 };
 
     useEffect(() => {
+   
         fetchPosts(); // 컴포넌트 마운트 시 최초 1회 불러오기
     }, []);
 
