@@ -55,14 +55,14 @@ function RegisterPage() {
                 return;
             }
 
-            const data = await res.json();
+            //const data = await res.json();
             alert("회원가입 성공! 로그인 페이지로 이동합니다.");
             navigate("/")
-            // console.log(data);
+            //console.log(data);
             // window.location.href = "/login";
         } catch (err) {
             console.error(err);
-            alert("서버 오류");
+            alert("서버 연결 오류");
         }
     };
 

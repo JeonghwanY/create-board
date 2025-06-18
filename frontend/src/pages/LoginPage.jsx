@@ -36,6 +36,7 @@ function LoginPage() {
             const data = await res.json();
             console.log("로그인 성공:", data);
             alert(`${data.username || "로그인"} 성공!`);
+            navigate ("/home")
 
             // 토큰 저장 예시 (선택)
             // localStorage.setItem("token", data.token);
