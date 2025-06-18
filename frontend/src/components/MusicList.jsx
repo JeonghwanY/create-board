@@ -1,11 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import "./MusicList.css";
 
-<<<<<<< HEAD
 const MusicList = ({ list, onWriteClick, onLoadMore,onItemClick }) => {
-=======
-const MusicList = ({ list, onWriteClick, onLoadMore }) => {
->>>>>>> min
     const observerTarget = useRef(null);
 
     useEffect(() => {
@@ -25,7 +21,6 @@ const MusicList = ({ list, onWriteClick, onLoadMore }) => {
 
             <ul className="musiclist-ul">
                 {list.map((item, idx) => (
-<<<<<<< HEAD
                     <li key={idx} 
                     className="musiclist-item"
                     onClick={() => onItemClick && onItemClick(item)}>
@@ -33,11 +28,6 @@ const MusicList = ({ list, onWriteClick, onLoadMore }) => {
                         <span className="time">{item.time}</span>
                         {/* setSelectedPost(item);
                         setMode('detail');  */}
-=======
-                    <li key={idx} className="musiclist-item">
-                        <span className="title">{item.title}</span>
-                        <span className="time">{item.time}</span>
->>>>>>> min
                     </li>
                 ))}
             </ul>
