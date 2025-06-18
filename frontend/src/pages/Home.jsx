@@ -4,6 +4,8 @@ import WriteForm from '../components/WriteForm';
 import PostDetail from '../components/PostDetail';
 import './Home.css';
 
+const API_BASE = "http://localhost:3000";
+
 const Home = () => {
     const [mode, setMode] = useState('list');
     const [list, setList] = useState([]);
@@ -36,7 +38,7 @@ const Home = () => {
 
     const handleSelectPost = async (item) => {
         try {
-            const res = await fetch(`/posts/${item.pid}`);
+            const res = await fetch(`${API_BASE}/posts/${item.pid}`);
             if (!res.ok) throw new Error("상세 조회 실패");
             const data = await res.json();
             setSelectedPost(data);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './WriteForm.css';
+const API_BASE = "http://localhost:3000";
 
 const WriteForm = ({ onSubmit, onCancel }) => {
   const [title, setTitle] = useState('');
