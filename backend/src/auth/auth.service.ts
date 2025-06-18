@@ -22,7 +22,9 @@ export class AuthService {
         const user = this.userRepository.create({email, username, password: hashedPassword });
         //await this.userRepository.save(user);
         try {
+            console.log('저장 직전:', user);
             await this.userRepository.save(user);
+            console.log('저장 완료');
         } catch (error) {
             if(error.code === '23505'){
                 throw new ConflictException('Existing username');
