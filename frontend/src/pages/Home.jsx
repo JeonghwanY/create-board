@@ -4,6 +4,8 @@ import WriteForm from '../components/WriteForm';
 import PostDetail from '../components/PostDetail';
 import './Home.css';
 
+const API_BASE = "http://localhost:3000";
+
 const Home = () => {
     const [mode, setMode] = useState('list');
     const [list, setList] = useState([]);
@@ -13,7 +15,7 @@ const Home = () => {
 
     const fetchPosts = async () => {
         try {
-            const res = await fetch(`/posts?page=${page}&limit=10`); /////////게시글 목록
+            const res = await fetch(`${API_BASE}/posts?page=${page}&limit=10`); /////////게시글 목록
             if (!res.ok) throw new Error("불러오기 실패");
             const data = await res.json();
             setList(prev => [...prev, ...data.posts]); // 게시글 누적
@@ -36,7 +38,7 @@ const Home = () => {
 
     const handleSelectPost = async (item) => {
         try {
-            const res = await fetch(`/posts/${item.pid}`);
+            const res = await fetch(`${API_BASE}/posts/${item.pid}`);
             if (!res.ok) throw new Error("상세 조회 실패");
             const data = await res.json();
             setSelectedPost(data);

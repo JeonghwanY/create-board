@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './PostDetail.css';
+const API_BASE = "http://localhost:3000";
 
 const PostDetail = ({ post, onBack, currentUser }) => {
     const [comments, setComments] = useState([]);
@@ -13,7 +14,7 @@ const PostDetail = ({ post, onBack, currentUser }) => {
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const res = await fetch(`/comments/board/${post.pid}`);
+                const res = await fetch(`${API_BASE}/comments/board/${post.pid}`);
                 const data = await res.json();
                 setComments(data);
             } catch {
@@ -28,7 +29,7 @@ const PostDetail = ({ post, onBack, currentUser }) => {
         if (!text.trim()) return;
 
         try {
-            const res = await fetch("/comments", {
+            const res = await fetch(`${API_BASE}/comments`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -54,7 +55,7 @@ const PostDetail = ({ post, onBack, currentUser }) => {
         if (!newText || newText.trim() === cmt.c_detail) return;
 
         try {
-            const res = await fetch(`/comments/${cmt.cid}`, {
+            const res = await fetch(`${API_BASE}/comments/${cmt.cid}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ c_detail: newText }), // ✅ key 이름 맞춤
@@ -77,7 +78,7 @@ const PostDetail = ({ post, onBack, currentUser }) => {
         if (!window.confirm("정말 삭제할까요?")) return;
 
         try {
-            const res = await fetch(`/posts/${post.pid}`, { ////////게시글 삭제
+            const res = await fetch(`${API_BASE}/posts/${post.pid}`, { ////////게시글 삭제
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ writer: currentUser }), // 작성자 검증
@@ -99,7 +100,7 @@ const PostDetail = ({ post, onBack, currentUser }) => {
         formData.append("writer", currentUser);
 
         try {
-            const res = await fetch(`/posts/${post.pid}`, { ///////게시글 수정
+            const res = await fetch(`${API_BASE}/posts/${post.pid}`, { ///////게시글 수정
                 method: "PATCH",
                 body: formData,
             });

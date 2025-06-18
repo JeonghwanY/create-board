@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './WriteForm.css';
+const API_BASE = "http://localhost:3000";
 
 const WriteForm = ({ onSubmit, onCancel }) => {
   const [title, setTitle] = useState('');
@@ -19,7 +20,7 @@ const WriteForm = ({ onSubmit, onCancel }) => {
     if (photo) formData.append("picture", photo);
   
     try {
-      const res = await fetch("/posts", { /////////////게시글 작성 연동 (POST /posts)
+      const res = await fetch(`${API_BASE}/posts`, { /////////////게시글 작성 연동 (POST /posts)
         method: "POST",
         body: formData,
       });
