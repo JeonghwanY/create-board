@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Post } from './post.entity';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { User } from 'src/auth/user.entity';
 
 @Injectable()
 export class PostsService {
@@ -13,18 +14,23 @@ export class PostsService {
     ) {}
 
     // 게시글 작성
-    async createPost(createPostDto: CreatePostDto, picture?: string | null): Promise<Post> {
-        const { title, detail, writer } = createPostDto;
-        
-        const post = this.postRepository.create({
-            title,
-            detail,
-            writer,
-            picture: picture || null,
-        });
+    async createPost(
+        createPostDto: CreatePostDto,
+        user: User, // ← 로그인된 유저를 추가로 받음
+        picture?: string | null
+    ): Promise<Post> {
+        const { title, detail } = createPostDto;
 
-        await this.postRepository.save(post);
-        return post;
+        const post = this.postRepository.create({
+        title,
+        detail,
+        user, // ← 실제 유저 인스턴스
+        picture: picture
+    } as Partial<Post>
+);
+
+    await this.postRepository.save(post);
+    return post;
     }
 
     // 게시글 목록 조회 (무한 스크롤용 - offset 방식)
@@ -64,7 +70,7 @@ export class PostsService {
         const post = await this.getPostById(pid);
         
         // 작성자 검증: 요청자가 게시글 작성자와 일치하는지 확인
-        if (post.writer !== requestWriter) {
+        if (post.user.username !== requestWriter) {
             throw new ForbiddenException('자신이 작성한 게시글만 수정할 수 있습니다');
         }
         
@@ -89,7 +95,7 @@ export class PostsService {
         const post = await this.getPostById(pid);
         
         // 작성자 검증: 요청자가 게시글 작성자와 일치하는지 확인
-        if (post.writer !== requestWriter) {
+        if (post.user.username !== requestWriter) {
             throw new ForbiddenException('자신이 작성한 게시글만 삭제할 수 있습니다');
         }
         

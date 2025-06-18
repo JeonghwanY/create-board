@@ -11,7 +11,8 @@ import {
     UploadedFile, 
     UseInterceptors, 
     UsePipes, 
-    ValidationPipe 
+    ValidationPipe, 
+    UseGuards
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -20,6 +21,9 @@ import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './post.entity';
+import { User } from 'src/auth/user.entity';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('posts')
 export class PostsController {
@@ -47,12 +51,15 @@ export class PostsController {
             fileSize: 1024 * 1024 * 5, // 5MB 제한
         },
     }))
+    
+    
     async createPost(
         @Body() createPostDto: CreatePostDto,
+        @GetUser() user: User,
         @UploadedFile() file?: Express.Multer.File
     ): Promise<Post> {
         const picturePath = file ? `/uploads/${file.filename}` : null;
-        return this.postsService.createPost(createPostDto, picturePath);
+        return this.postsService.createPost(createPostDto, user ,picturePath);
     }
 
     // 게시글 목록 조회 API (무한 스크롤용)
