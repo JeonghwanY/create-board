@@ -71,7 +71,7 @@
 }
 
 .save-btn {
-    background-color: #4caf50;
+    background: #8bc34a;
     color: white;
     padding: 6px;
     border: none;
@@ -85,7 +85,7 @@
 }
 
 .cancel-btn {
-    background-color: #4caf50;
+    background: #8bc34a;
     color: white;
     cursor: pointer;
     padding: 6px;

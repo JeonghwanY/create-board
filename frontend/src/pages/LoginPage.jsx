@@ -20,7 +20,7 @@ function LoginPage() {
         }
 
         try {
-            const res = await fetch(`${API_BASE}/api/auth/login`, { //로그인
+            const res = await fetch(`${API_BASE}/auth/signin`, { //로그인
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

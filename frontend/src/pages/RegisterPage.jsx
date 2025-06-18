@@ -13,29 +13,29 @@ function RegisterPage() {
 
     const navigate = useNavigate();
 
-    const checkEmailDuplicate = async () => {
-        try {
-            const res = await fetch(`${API_BASE}//api/auth/check`, {  //이메일 중복 검사(회원가입)
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email })
-            });
+    // const checkEmailDuplicate = async () => {
+    //     try {
+    //         const res = await fetch(`${API_BASE}/auth/check`, {  //이메일 중복 검사(회원가입)
+    //             method: "POST",
+    //             headers: { "Content-Type": "application/json" },
+    //             body: JSON.stringify({ email })
+    //         });
 
-            if (!res.ok) throw new Error("중복 검사 실패");
+    //         if (!res.ok) throw new Error("중복 검사 실패");
 
-            const result = await res.json();
-            if (result.exists) {
-                alert("이미 사용 중인 이메일입니다.");
-                setEmailChecked(false);
-            } else {
-                alert("사용 가능한 이메일입니다!");
-                setEmailChecked(true);
-            }
-        } catch (err) {
-            console.error(err);
-            alert("이메일 확인 중 오류 발생");
-        }
-    };
+    //         const result = await res.json();
+    //         if (result.exists) {
+    //             alert("이미 사용 중인 이메일입니다.");
+    //             setEmailChecked(false);
+    //         } else {
+    //             alert("사용 가능한 이메일입니다!");
+    //             setEmailChecked(true);
+    //         }
+    //     } catch (err) {
+    //         console.error(err);
+    //         alert("이메일 확인 중 오류 발생");
+    //     }
+    // };
 
     const handleRegister = async () => {
         if (!emailChecked) {
@@ -44,7 +44,7 @@ function RegisterPage() {
         }
 
         try {
-            const res = await fetch(`${API_BASE}//api/auth/register`, { //회원 가입 
+            const res = await fetch(`${API_BASE}/auth/signup`, { //회원 가입 
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password, username })
