@@ -6,7 +6,7 @@ import { Post } from "src/posts/post.entity";
 
 export const typeORMConfig : TypeOrmModuleOptions = {//type orm 모듈
     type: 'postgres',
-    host: 'localhost',
+    host: '13.125.214.63',
     port: 5432,
     username: 'postgres',
     password: '1234',
