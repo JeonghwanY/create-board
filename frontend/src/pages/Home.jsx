@@ -12,17 +12,17 @@ const Home = () => {
     const [selectedPost, setSelectedPost] = useState(null);
 
     const fetchPosts = async () => {
-        try {
-            const res = await fetch(`/posts?page=${page}&limit=10`); /////////게시글 목록
-            if (!res.ok) throw new Error("불러오기 실패");
-            const data = await res.json();
-            setList(prev => [...prev, ...data.posts]); // 게시글 누적
-            setHasMore(data.hasMore);
-            setPage(prev => prev + 1);
-        } catch (err) {
-            alert("게시글을 불러오지 못했습니다.");
-        }
-    };
+    try {
+        const res = await fetch(`/posts?page=${page}&limit=10`); // 프록시 설정을 통해 백엔드로 전달
+        if (!res.ok) throw new Error("불러오기 실패");
+        const data = await res.json();
+        setList(prev => [...prev, ...data.posts]); // 게시글 누적
+        setHasMore(data.hasMore);
+        setPage(prev => prev + 1);
+    } catch (err) {
+        alert("게시글을 불러오지 못했습니다.");
+    }
+};
 
     useEffect(() => {
         fetchPosts(); // 컴포넌트 마운트 시 최초 1회 불러오기

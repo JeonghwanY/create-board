@@ -19,7 +19,7 @@ const WriteForm = ({ onSubmit, onCancel }) => {
     if (photo) formData.append("picture", photo);
   
     try {
-      const res = await fetch("/posts", { /////////////게시글 작성 연동 (POST /posts)
+      const res = await fetch("http://localhost:3000/posts", { /////////////게시글 작성 연동 (POST /posts)
         method: "POST",
         body: formData,
       });
