@@ -14,17 +14,10 @@
 .home-content {
     display: flex;
     justify-content: center;
-<<<<<<< HEAD
     /* align-items: flex-start; */
     gap: 60px;
     /* max-width: 1200px; */
     /* margin: auto; */
-=======
-    align-items: flex-start;
-    gap: 40px;
-    max-width: 1200px;
-    /* margin: 0 auto; */
->>>>>>> min
 }
 
 /* .youtube-box {
