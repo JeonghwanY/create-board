@@ -13,7 +13,7 @@ async function bootstrap() {
 
   // main.ts (NestJS)
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: 'http://13.125.214.63:5173',
     credentials: true,
   });
 

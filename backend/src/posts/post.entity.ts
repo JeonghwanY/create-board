@@ -19,7 +19,7 @@ export class Post extends BaseEntity {
     picture: string; // 이미지 경로 (선택)
 
     // 관계 설정
-    @ManyToOne(() => User, { onDelete: 'CASCADE' })
+    @ManyToOne(() => User, { nullable:true, onDelete: 'SET NULL' })
     user: User;
 } 
 // @Column()
