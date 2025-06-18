@@ -1,42 +1,39 @@
-.comment-input input {
-    width: 80%;
-    padding: 8px;
-}
-
-.comment-input button {
-    background-color: #007aff;
-    color: white;
-    padding: 6px 12px;
-    margin-left: 6px;
-    border: none;
-    border-radius: 4px;
-}
-
-.comment-input button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-.back-btn {
-    background-color: green;
-    color: white;
-    padding: 6px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-/* PostDetail.css */
-.post-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 제목 왼쪽, 메뉴 오른쪽 정렬 */
+.comment-item {
     margin-bottom: 10px;
-    position: relative; /* 메뉴 드롭다운을 위한 기준점 */
+    padding: 8px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
 }
 
-.photo-box img {
-    max-width: 100%;     /* 부모 너비를 넘지 않게 */
-    height: auto;        /* 비율 유지 */
-    border-radius: 8px;  /* 선택: 모서리 둥글게 */
-    object-fit: contain; /* 이미지 비율 유지하면서 박스 안에 맞춤 */
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.comment-time {
+    font-size: 12px;
+    color: gray;
+    margin-top: 4px;
+    display: block;
+}
+
+.comment-actions button {
+    background: none;
+    border: none;
+    font-size: 12px;
+    margin-left: 8px;
+    color: #888;
+    cursor: pointer;
+    padding: 2px 4px;
+}
+
+.comment-actions button:hover {
+    color: #222;
+    text-decoration: underline;
 }

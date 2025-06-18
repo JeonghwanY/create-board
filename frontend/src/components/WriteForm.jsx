@@ -7,26 +7,36 @@ const WriteForm = ({ onSubmit, onCancel }) => {
   const [photo, setPhoto] = useState(null);
   const [userId, setUserId] = useState('');
 
-  const handleSave = () => {
-    if (!title.trim()) return;
-    const now = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+  const handleSave = async () => {
+    if (!title.trim() || !userId.trim()) {
+      alert("제목과 USER ID는 필수입니다.");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("detail", detail);
+    formData.append("writer", userId);
+    if (photo) formData.append("picture", photo);
   
-    const newPost = {
-      title,
-      detail,
-      photo,
-      userId,
-      time: now,
-    };
+    try {
+      const res = await fetch("/posts", { /////////////게시글 작성 연동 (POST /posts)
+        method: "POST",
+        body: formData,
+      });
   
-    onSubmit(newPost);        // Home에 post 전달
-    alert("저장되었습니다");   // ✅ 알림 띄우기
+      if (!res.ok) throw new Error("저장 실패");
   
-    // 값 초기화 (선택)
-    setTitle('');
-    setDetail('');
-    setUserId('');
-    setPhoto(null);
+      const savedPost = await res.json(); // 저장된 post 객체 받아옴
+      onSubmit(savedPost); // 부모(Home.jsx)에 전달
+      alert("저장되었습니다");
+  
+      setTitle('');
+      setDetail('');
+      setUserId('');
+      setPhoto(null);
+    } catch (err) {
+      alert("게시글 저장 중 오류 발생");
+    }
   };
   return (
     <div className="write-form-container">
