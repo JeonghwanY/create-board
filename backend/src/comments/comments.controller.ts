@@ -23,6 +23,7 @@ export class CommentsController {
     @Post()
     @UsePipes(ValidationPipe)
     createComment(@Body() createCommentDto: CreateCommentDto): Promise<Comment> {
+        console.log('댓글 작성 요청 받음:', createCommentDto);
         return this.commentsService.createComment(createCommentDto);
     }
 

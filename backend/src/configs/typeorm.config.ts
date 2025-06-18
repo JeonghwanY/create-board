@@ -12,6 +12,7 @@ export const typeORMConfig : TypeOrmModuleOptions = {
     database: process.env.DB_DATABASE || 'board_app',
     entities: [Post, User, Comment],
     synchronize: true,
+    dropSchema: true,
     ssl: false,
     connectTimeoutMS: 60000,
     extra: {

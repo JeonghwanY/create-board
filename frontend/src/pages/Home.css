@@ -1,37 +1,49 @@
 .home-wrapper {
-    padding: 40px;
-    font-family: cursive;
-    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
+    padding: 20px;
 }
 
 .home-header {
-    font-size: 32px;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #333;
     text-align: center;
-    margin-bottom: 100px;
 }
 
 .home-content {
     display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    max-width: 1850px; /* YouTube(1280) + gap(30) + side-box(534) + 여유공간 */
+    width: 100%;
     justify-content: center;
-    /* align-items: flex-start; */
-    gap: 60px;
-    /* max-width: 1200px; */
-    /* margin: auto; */
 }
 
-/* .youtube-box {
-    width: 700px;
-    height: 360px;
-    background-color: #d1d1d1;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.youtube-box {
+    width: 1280px;
+    height: 720px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
 
-} */
-
+.youtube-box iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
 
 .side-box {
-    width: 320px;
+    width: 534px;
+    height: 720px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
 }

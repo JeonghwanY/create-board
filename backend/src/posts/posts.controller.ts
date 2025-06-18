@@ -11,8 +11,7 @@ import {
     UploadedFile, 
     UseInterceptors, 
     UsePipes, 
-    ValidationPipe, 
-    UseGuards
+    ValidationPipe
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -21,9 +20,6 @@ import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './post.entity';
-import { User } from 'src/auth/user.entity';
-import { GetUser } from 'src/auth/get-user.decorator';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller('posts')
 export class PostsController {
@@ -51,15 +47,21 @@ export class PostsController {
             fileSize: 1024 * 1024 * 5, // 5MB 제한
         },
     }))
-    
-    
     async createPost(
         @Body() createPostDto: CreatePostDto,
-        @GetUser() user: User,
+        @Body('writer') writer: string,
         @UploadedFile() file?: Express.Multer.File
     ): Promise<Post> {
+        console.log('createPost called with:');
+        console.log('createPostDto:', createPostDto);
+        console.log('writer:', writer);
+        console.log('file:', file ? file.filename : 'no file');
+        
         const picturePath = file ? `/uploads/${file.filename}` : null;
-        return this.postsService.createPost(createPostDto, user ,picturePath);
+        const result = await this.postsService.createPost(createPostDto, writer, picturePath);
+        
+        console.log('Created post:', result);
+        return result;
     }
 
     // 게시글 목록 조회 API (무한 스크롤용)
@@ -68,7 +70,16 @@ export class PostsController {
         @Query('page') page: number = 1,
         @Query('limit') limit: number = 10
     ): Promise<{ posts: Post[], total: number, hasMore: boolean }> {
-        return this.postsService.getPosts(page, limit);
+        console.log('getPosts called with page:', page, 'limit:', limit);
+        
+        const result = await this.postsService.getPosts(page, limit);
+        console.log('Posts result:', {
+            postsCount: result.posts.length,
+            total: result.total,
+            hasMore: result.hasMore
+        });
+        
+        return result;
     }
 
     // 게시글 상세 조회 API

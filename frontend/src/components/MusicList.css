@@ -1,48 +1,216 @@
 .musiclist-wrapper {
-    width: 320px;
-    background-color: #eee;
+    width: 100%;
+    height: 720px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f4f4f4;
     border-radius: 20px;
-    padding: 20px 16px;
-    position: relative;
+    padding: 16px;
     font-family: cursive;
+    box-sizing: border-box;
 }
 
 .newpost-button {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background-color: limegreen;
+    width: 100%;
+    height: 40px;
+    background-color: #4caf50;
     color: white;
     border: none;
-    border-radius: 10px;
-    padding: 6px 12px;
+    border-radius: 6px;
     cursor: pointer;
-    font-family: inherit;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.newpost-button:hover {
+    background-color: #388e3c;
 }
 
 .musiclist-ul {
-    margin-top: 60px;
+    flex: 1;
+    overflow-y: auto;
     list-style: none;
     padding: 0;
+    margin: 0;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    max-height: calc(720px - 140px); /* 버튼과 패딩을 고려한 높이 */
+}
+
+/* 스크롤바 스타일링 (Webkit 브라우저용) */
+.musiclist-ul::-webkit-scrollbar {
+    width: 6px;
+}
+
+.musiclist-ul::-webkit-scrollbar-track {
+    background: #e8f5e8;
+    border-radius: 10px;
+}
+
+.musiclist-ul::-webkit-scrollbar-thumb {
+    background: #c8e6c9;
+    border-radius: 10px;
+}
+
+.musiclist-ul::-webkit-scrollbar-thumb:hover {
+    background: #8bc34a;
 }
 
 .musiclist-item {
     display: flex;
     justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #ccc;
+    padding: 12px 8px;
+    border-bottom: 1px solid #c8e6c9;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-right: 4px; /* 스크롤바와의 간격 */
+}
+
+.musiclist-item:hover {
+    background-color: #e8f5e8;
+    border-radius: 8px;
 }
 
 .musiclist-item .title {
     font-weight: bold;
     font-size: 18px;
+    flex: 1;
+    margin-right: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .musiclist-item .time {
     font-size: 12px;
-    color: #555;
+    color: #2e7d32;
+    flex-shrink: 0;
+}
+
+/* 스켈레톤 로더 스타일 */
+.musiclist-item.skeleton {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.skeleton-title {
+    width: 60%;
+    height: 18px;
+    background: linear-gradient(90deg, #e8f5e8 25%, #c8e6c9 50%, #e8f5e8 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+.skeleton-time {
+    width: 30%;
+    height: 12px;
+    background: linear-gradient(90deg, #e8f5e8 25%, #c8e6c9 50%, #e8f5e8 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }
 
 .scroll-anchor {
-    height: 1px;
+    height: 10px;
+    margin-bottom: 10px;
+}
+
+/* 상태 표시 영역 */
+.status-area {
+    flex-shrink: 0;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 로딩 컨테이너 */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    gap: 10px;
+    color: #2e7d32;
+    font-size: 14px;
+}
+
+/* 로딩 스피너 */
+.loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #e8f5e8;
+    border-top: 2px solid #4caf50;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 에러 컨테이너 */
+.error-container {
+    text-align: center;
+    padding: 15px;
+}
+
+.error-message {
+    color: #d32f2f;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.retry-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.retry-button:hover {
+    background-color: #388e3c;
+}
+
+/* 더 이상 데이터 없음 */
+.no-more-data {
+    text-align: center;
+    padding: 15px;
+    color: #2e7d32;
+    font-size: 14px;
+    border-top: 1px solid #c8e6c9;
+}
+
+/* 빈 상태 */
+.empty-state {
+    text-align: center;
+    padding: 20px;
+    color: #2e7d32;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty-state p {
+    margin-bottom: 16px;
+    font-size: 16px;
 }

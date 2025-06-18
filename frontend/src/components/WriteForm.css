@@ -71,22 +71,33 @@
 }
 
 .save-btn {
-    background-color: green;
+    background-color: #4caf50;
     color: white;
     padding: 6px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.save-btn:hover {
+    background-color: #388e3c;
 }
 
 .cancel-btn {
-    background-color: green;
+    background-color: #4caf50;
     color: white;
     cursor: pointer;
     padding: 6px;
     border: none;
     border-radius: 6px;
+    transition: background-color 0.2s ease;
 }
+
+.cancel-btn:hover {
+    background-color: #388e3c;
+}
+
 .user-input {
     width: 100%;
     padding: 6px;

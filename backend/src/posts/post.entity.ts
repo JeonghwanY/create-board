@@ -18,9 +18,12 @@ export class Post extends BaseEntity {
     @Column({ nullable: true })
     picture: string; // 이미지 경로 (선택)
 
-    // 관계 설정
-    @ManyToOne(() => User, { onDelete: 'CASCADE' })
-    user: User;
+    @Column({ default: 'anonymous' })
+    writer: string; // 게시글 작성자
+
+    // 관계 설정 (선택적)
+    @ManyToOne(() => User, { nullable: true, onDelete: 'CASCADE' })
+    user?: User;
 } 
 // @Column()
 //     writer: string; // 게시글 작성자 (User의 username을 참조)
