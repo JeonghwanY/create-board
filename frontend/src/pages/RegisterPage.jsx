@@ -9,7 +9,7 @@ function RegisterPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
-    const [emailChecked, setEmailChecked] = useState(false);
+    // const [emailChecked] = useState(false);
 
     const navigate = useNavigate();
 
@@ -38,10 +38,10 @@ function RegisterPage() {
     // };
 
     const handleRegister = async () => {
-        if (!emailChecked) {
-            alert("이메일 중복 확인을 해주세요.");
-            return;
-        }
+        // if (!emailChecked) {
+        //     alert("이메일 중복 확인을 해주세요.");
+        //     return;
+        // }
 
         try {
             const res = await fetch(`${API_BASE}/auth/signup`, { //회원 가입 
@@ -76,9 +76,9 @@ function RegisterPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
-            <button className="check-button" onClick={checkEmailDuplicate}>
+            {/* <button className="check-button" onClick={checkEmailDuplicate}>
                 이메일 중복 확인
-            </button>
+            </button> */}
 
             <input
                 type="text"
