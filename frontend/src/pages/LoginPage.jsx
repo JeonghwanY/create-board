@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import VerifyEmailModal from "../components/VerifyEmail";
 
+const API_BASE = "http://localhost:3000";
+
+
 function LoginPage() {
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
@@ -17,7 +20,7 @@ function LoginPage() {
         }
 
         try {
-            const res = await fetch("/api/auth/login", { //로그인
+            const res = await fetch(`${API_BASE}/api/auth/login`, { //로그인
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

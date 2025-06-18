@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RegisterPage.css";
 
+const API_BASE = "http://localhost:3000";
+
+
 function RegisterPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -12,7 +15,7 @@ function RegisterPage() {
 
     const checkEmailDuplicate = async () => {
         try {
-            const res = await fetch("/api/auth/check", {  //이메일 중복 검사(회원가입)
+            const res = await fetch(`${API_BASE}//api/auth/check`, {  //이메일 중복 검사(회원가입)
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email })
@@ -41,7 +44,7 @@ function RegisterPage() {
         }
 
         try {
-            const res = await fetch("/api/auth/register", { //회원 가입 
+            const res = await fetch(`${API_BASE}//api/auth/register`, { //회원 가입 
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password, username })
