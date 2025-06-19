@@ -6,11 +6,13 @@ const WriteForm = ({ onSubmit, onCancel }) => {
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
   const [photo, setPhoto] = useState(null);
-  const [userId, setUserId] = useState('');
+  
+  // 로그인된 사용자 정보 가져오기
+  const userId = localStorage.getItem("user") || "anonymous";
 
   const handleSave = async () => {
-    if (!title.trim() || !userId.trim()) {
-      alert("제목과 USER ID는 필수입니다.");
+    if (!title.trim()) {
+      alert("제목은 필수입니다.");
       return;
     }
     
@@ -51,7 +53,6 @@ const WriteForm = ({ onSubmit, onCancel }) => {
   
       setTitle('');
       setDetail('');
-      setUserId('');
       setPhoto(null);
     } catch (err) {
       console.error('Error saving post:', err);
@@ -60,16 +61,6 @@ const WriteForm = ({ onSubmit, onCancel }) => {
   };
   return (
     <div className="write-form-container">
-
-<div className="user-meta">
-        <input
-          className="user-input"
-          type="text"
-          placeholder="USER ID"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-        />
-      </div>
 
       <div className="write-actions">
         <input

@@ -35,8 +35,13 @@ function LoginPage() {
 
             const data = await res.json();
             console.log("로그인 성공:", data);
-            alert(`${data.username || "로그인"} 성공!`);
-            navigate ("/home")
+            
+            // 사용자 정보 저장
+            localStorage.setItem("token", data.accessToken);
+            localStorage.setItem("user", id); // 이메일을 사용자 식별자로 사용
+            
+            alert(`${id}님 로그인 성공!`);
+            navigate("/home");
 
             // 토큰 저장 예시 (선택)
             // localStorage.setItem("token", data.token);
@@ -50,30 +55,47 @@ function LoginPage() {
     };
 
     return (
-        <div className="login-container">
-            <h1 className="title">Music in the</h1>
-            <h2 className="subtitle">JUNGLE</h2>
+        <div className="login-page">
+            {/* YouTube 비디오 배경 */}
+            <div className="video-background">
+                <iframe
+                    src="https://www.youtube.com/embed/CY2VXqEpXzQ?autoplay=1&mute=1&loop=1&playlist=CY2VXqEpXzQ&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1&origin=http://localhost:5173"
+                    title="Background Video"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                />
+            </div>
+            
+            {/* 오버레이 */}
+            <div className="overlay"></div>
+            
+            {/* 로그인 폼 */}
+            <div className="login-container">
+                <h1 className="title">Music in the</h1>
+                <h2 className="subtitle">JUNGLE</h2>
 
-            <input
-                type="text"
-                placeholder="ID"
-                className="input-box"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="PW"
-                className="input-box"
-                value={pw}
-                onChange={(e) => setPw(e.target.value)}
-            />
-            <button className="button" onClick={handleLogin}>로그인</button>
-            <button className="button" onClick={() => navigate("/register")}>회원가입</button>
-            <button className="button" onClick={() => setShowModal(true)}>
-                ID/PW 찾기
-            </button>
-            {showModal && <VerifyEmailModal onClose={() => setShowModal(false)} />}
+                <input
+                    type="text"
+                    placeholder="ID"
+                    className="input-box"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="PW"
+                    className="input-box"
+                    value={pw}
+                    onChange={(e) => setPw(e.target.value)}
+                />
+                <button className="button" onClick={handleLogin}>로그인</button>
+                <button className="button" onClick={() => navigate("/register")}>회원가입</button>
+                <button className="button" onClick={() => setShowModal(true)}>
+                    ID/PW 찾기
+                </button>
+                {showModal && <VerifyEmailModal onClose={() => setShowModal(false)} />}
+            </div>
         </div>
     );
 }

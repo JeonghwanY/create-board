@@ -17,14 +17,10 @@ export class Comment extends BaseEntity {
     c_date: Date; // 댓글 작성 시간
 
     @Column()
-    c_writer: string; // 댓글 작성자 (User의 username을 참조)
+    c_writer: string; // 댓글 작성자 (자유 텍스트)
 
     // 관계 설정
     @ManyToOne(() => Post, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'pid', referencedColumnName: 'pid' })
     post: Post;
-
-    @ManyToOne(() => User, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'c_writer', referencedColumnName: 'username' })
-    user: User;
 } 

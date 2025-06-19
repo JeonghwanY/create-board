@@ -50,4 +50,9 @@ export class AuthService {
             throw new UnauthorizedException('login failed')
         }
     }
+
+    async signOut(): Promise<{message: string}> {
+        // 클라이언트에서 토큰을 삭제하도록 안내
+        return { message: '로그아웃되었습니다.' };
+    }
 }

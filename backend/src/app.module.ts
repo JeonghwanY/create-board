@@ -5,6 +5,7 @@ import { typeORMConfig } from './configs/typeorm.config';
 import { AuthModule } from './auth/auth.module';
 import { CommentsModule } from './comments/comments.module';
 import { ConfigModule } from '@nestjs/config';
+import { MusicRecommendationModule } from './music-recommendation/music-recommendation.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forRoot(typeORMConfig),
     PostsModule,
     AuthModule,
-    CommentsModule
+    CommentsModule,
+    MusicRecommendationModule
   ],
 })
 export class AppModule {}

@@ -8,8 +8,6 @@ const PostDetail = ({ post, onBack, currentUser }) => {
     const [showMenu, setShowMenu] = useState(false); // 메뉴 열림 여부
     const commentEndRef = useRef(null);
 
-    const isAuthor = post.writer === currentUser; // 현재 유저가 작성자인가?
-
     // 한국 시간으로 변환하는 함수
     const formatKoreanTime = (dateString) => {
         try {
@@ -180,7 +178,7 @@ const PostDetail = ({ post, onBack, currentUser }) => {
                 <div className="menu" onClick={() => setShowMenu(!showMenu)}>⋮</div>
 
                 {/* 🔽 메뉴 토글 시 나타남 */}
-                {showMenu && isAuthor && (
+                {showMenu && (
                     <div className="menu-options">
                         <button onClick={handleUpdate}>수정</button>
                         <button onClick={handleDelete}>삭제</button>
@@ -216,12 +214,10 @@ const PostDetail = ({ post, onBack, currentUser }) => {
                     <div key={cmt.cid || idx} className="comment-item">
                         <div className="comment-header">
                             <span className="comment-text">{cmt.c_detail}</span>
-                            {cmt.c_writer === currentUser && (
-                                <div className="comment-actions">
-                                    <button className="edit-btn" onClick={() => handleEditComment(cmt)}>수정</button>
-                                    <button className="delete-btn" onClick={() => handleDeleteComment(cmt.cid)}>삭제</button>
-                                </div>
-                            )}
+                            <div className="comment-actions">
+                                <button className="edit-btn" onClick={() => handleEditComment(cmt)}>수정</button>
+                                <button className="delete-btn" onClick={() => handleDeleteComment(cmt.cid)}>삭제</button>
+                            </div>
                         </div>
                         <span className="comment-time">
                             {formatKoreanTime(cmt.time || cmt.c_date)}

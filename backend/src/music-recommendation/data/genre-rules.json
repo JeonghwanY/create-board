@@ -1,0 +1,52 @@
+{
+  "genre_rules": [
+    {
+      "weather_emoji": "☀️",
+      "time_tags": ["morning", "day"],
+      "genre": "Summer Pop / Chill Pop"
+    },
+    {
+      "weather_emoji": "☀️",
+      "time_tags": ["evening", "night"],
+      "genre": "City Pop / Indie Rock"
+    },
+    {
+      "weather_emoji": "☁️",
+      "time_tags": ["*"],
+      "genre": "Indie Folk / Dreamy Jazz"
+    },
+    {
+      "weather_emoji": "🌧️",
+      "time_tags": ["*"],
+      "genre": "Lo-Fi Hip-hop / Rainy Jazz"
+    },
+    {
+      "weather_emoji": "❄️",
+      "time_tags": ["*"],
+      "genre": "Piano Ballad / Acoustic"
+    },
+    {
+      "weather_emoji": "⚡",
+      "time_tags": ["dawn"],
+      "genre": "Ambient Electronica"
+    },
+    {
+      "weather_emoji": "💨",
+      "time_tags": ["day"],
+      "genre": "Upbeat Alt-Rock"
+    }
+  ],
+  "temp_corrections": [
+    {
+      "temp_tag": "hot",
+      "base_genre": "Lo-Fi",
+      "corrected_genre": "Tropical House"
+    },
+    {
+      "temp_tag": "cold",
+      "base_genre_pattern": "Pop",
+      "corrected_genre": "Acoustic Pop"
+    }
+  ],
+  "default_genre": "Chill Music"
+} 

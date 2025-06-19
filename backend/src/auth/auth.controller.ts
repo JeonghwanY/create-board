@@ -20,6 +20,11 @@ export class AuthController {
         return this.authService.signIn(authCredentialsDto);
     }
 
+    @Post('/signout')
+    signOut(): Promise<{message: string}> {
+        return this.authService.signOut();
+    }
+
     @Post('/test')
     @UseGuards(AuthGuard())
     test(@GetUser() user: User) {

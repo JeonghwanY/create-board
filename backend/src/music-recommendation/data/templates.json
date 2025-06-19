@@ -1,0 +1,39 @@
+{
+  "cities": [
+    { "id": 1,  "name": "Paris",       "iso": "FR", "lat": 48.8566, "lon": 2.3522 },
+    { "id": 2,  "name": "Venice",      "iso": "IT", "lat": 45.4408, "lon": 12.3155 },
+    { "id": 3,  "name": "Santorini",   "iso": "GR", "lat": 36.3932, "lon": 25.4615 },
+    { "id": 4,  "name": "New York",    "iso": "US", "lat": 40.7128, "lon": -74.0060 },
+    { "id": 5,  "name": "Barcelona",   "iso": "ES", "lat": 41.3874, "lon": 2.1686 },
+    { "id": 6,  "name": "Tokyo",       "iso": "JP", "lat": 35.6895, "lon": 139.6917 },
+    { "id": 7,  "name": "London",      "iso": "GB", "lat": 51.5074, "lon": -0.1278 },
+    { "id": 8,  "name": "Prague",      "iso": "CZ", "lat": 50.0755, "lon": 14.4378 },
+    { "id": 9,  "name": "Budapest",    "iso": "HU", "lat": 47.4979, "lon": 19.0402 },
+    { "id": 10, "name": "Brooklyn",    "iso": "US", "lat": 40.6782, "lon": -73.9442 }
+  ],
+
+  "weather_map": { 
+    "Clear": "☀️", 
+    "Clouds": "☁️", 
+    "Rain": "🌧️", 
+    "Drizzle": "🌧️",
+    "Snow": "❄️", 
+    "Thunderstorm": "⚡", 
+    "Extreme": "💨" 
+  },
+
+  "temp_map": [
+    { "min": 28, "max": 99,  "emoji": "🔥", "tag": "hot"  },
+    { "min": 16, "max": 27,  "emoji": "🌿", "tag": "mild" },
+    { "min": -50,"max": 15,  "emoji": "❄️", "tag": "cold"}
+  ],
+
+  "time_map": [
+    { "start": 6,  "end": 10, "emoji": "🌅", "tag": "morning"  },
+    { "start": 10, "end": 13, "emoji": "☀️", "tag": "day"      },
+    { "start": 13, "end": 16, "emoji": "🌤", "tag": "afternoon" },
+    { "start": 16, "end": 21, "emoji": "🌇", "tag": "evening"   },
+    { "start": 21, "end": 24, "emoji": "🌙", "tag": "night"     },
+    { "start": 0,  "end": 6,  "emoji": "🌌", "tag": "dawn"      }
+  ]
+} 

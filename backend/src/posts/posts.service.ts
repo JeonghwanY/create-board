@@ -99,7 +99,7 @@ export class PostsService {
         });
     }
 
-    // 게시글 수정 (작성자 검증 포함)
+    // 게시글 수정 (작성자 검증 제거)
     async updatePost(pid: number, updatePostDto: UpdatePostDto, requestWriter: string, picture?: string | null): Promise<Post> {
         const post = await this.postRepository.findOne({
             where: { pid }
@@ -107,11 +107,6 @@ export class PostsService {
         
         if (!post) {
             throw new NotFoundException(`게시글 ID ${pid}를 찾을 수 없습니다`);
-        }
-
-        // 작성자 검증: 요청자가 게시글 작성자와 일치하는지 확인
-        if (post.writer !== requestWriter) {
-            throw new ForbiddenException('자신이 작성한 게시글만 수정할 수 있습니다');
         }
         
         if (updatePostDto.title) {
@@ -130,7 +125,7 @@ export class PostsService {
         return post;
     }
 
-    // 게시글 삭제 (작성자 검증 포함)
+    // 게시글 삭제 (작성자 검증 제거)
     async deletePost(pid: number, requestWriter: string): Promise<void> {
         const post = await this.postRepository.findOne({
             where: { pid }
@@ -138,11 +133,6 @@ export class PostsService {
         
         if (!post) {
             throw new NotFoundException(`게시글 ID ${pid}를 찾을 수 없습니다`);
-        }
-
-        // 작성자 검증: 요청자가 게시글 작성자와 일치하는지 확인
-        if (post.writer !== requestWriter) {
-            throw new ForbiddenException('자신이 작성한 게시글만 삭제할 수 있습니다');
         }
         
         const result = await this.postRepository.delete(pid);

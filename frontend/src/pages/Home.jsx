@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MusicList from '../components/MusicList';
 import WriteForm from '../components/WriteForm';
 import PostDetail from '../components/PostDetail';
@@ -14,10 +15,78 @@ const Home = () => {
     const [selectedPost, setSelectedPost] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [musicRecommendation, setMusicRecommendation] = useState(null);
+    const [isLoadingRecommendation, setIsLoadingRecommendation] = useState(false);
+    const [backgroundImage, setBackgroundImage] = useState(null);
+    const navigate = useNavigate();
+    
+    // 로그인된 사용자 정보 가져오기
+    const currentUser = localStorage.getItem("user") || "anonymous";
     
     // useRef로 초기 로딩 상태 관리
     const isInitialLoadedRef = useRef(false);
     const isLoadingRef = useRef(false);
+
+    // YouTube URL에서 썸네일 URL 추출
+    const getYouTubeThumbnail = (youtubeUrl) => {
+        if (!youtubeUrl) return null;
+        
+        // embed URL에서 video ID 추출
+        const videoIdMatch = youtubeUrl.match(/embed\/([a-zA-Z0-9_-]+)/);
+        if (videoIdMatch) {
+            const videoId = videoIdMatch[1];
+            return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+        }
+        return null;
+    };
+
+    // 음악 추천 가져오기
+    const fetchMusicRecommendation = useCallback(async () => {
+        setIsLoadingRecommendation(true);
+        try {
+            const res = await fetch(`${API_BASE}/api/recommend`);
+            if (!res.ok) throw new Error("음악 추천을 가져오지 못했습니다.");
+            const data = await res.json();
+            setMusicRecommendation(data);
+            
+            // YouTube 썸네일을 배경으로 설정
+            const thumbnailUrl = getYouTubeThumbnail(data.youtubeUrl);
+            if (thumbnailUrl) {
+                setBackgroundImage(thumbnailUrl);
+            }
+        } catch (err) {
+            console.error("음악 추천 오류:", err);
+            // 기본값 설정하지 않음 - 백엔드에서 처리
+            setMusicRecommendation(null);
+            setBackgroundImage(null);
+        } finally {
+            setIsLoadingRecommendation(false);
+        }
+    }, []);
+
+    // 로그아웃 함수
+    const handleLogout = async () => {
+        try {
+            const res = await fetch(`${API_BASE}/auth/signout`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            });
+            
+            if (res.ok) {
+                // 로컬 스토리지에서 토큰 삭제
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                alert("로그아웃되었습니다.");
+                navigate("/");
+            }
+        } catch (err) {
+            console.error("로그아웃 중 오류:", err);
+            // 에러가 발생해도 로컬 스토리지 정리하고 로그인 페이지로 이동
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            navigate("/");
+        }
+    };
 
     // 초기 데이터 로딩을 위한 함수
     const loadInitialPosts = useCallback(async () => {
@@ -134,6 +203,7 @@ const Home = () => {
     useEffect(() => {
         console.log('Component mounted, loading initial posts...');
         loadInitialPosts();
+        fetchMusicRecommendation();
         
         // cleanup 함수
         return () => {
@@ -160,20 +230,63 @@ const Home = () => {
         }
     };
 
+    // 추천 문구 포맷 함수
+    const getFormattedEmojiText = (rec) => {
+        if (!rec) return '';
+        // 예시: ☀️ + 🌌 + 🌿 in London... = Chill Music
+        // emoji: "☀️ 🌌 🌿 in London..."
+        const [weather, time, temp, ...rest] = rec.emoji.split(' ');
+        const cityPart = rest.join(' ');
+        return `${weather} + ${time} + ${temp} ${cityPart} = ${rec.genre}`;
+    };
+
     return (
-        <div className="home-wrapper">
-            <h1 className="home-header">
-                ☁️ + 🌇 in paris... = <span className="italic">lo-fi</span>
-            </h1>
+        <div 
+            className="home-wrapper"
+            style={{
+                backgroundImage: backgroundImage ? `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${backgroundImage})` : 'none',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundAttachment: 'fixed'
+            }}
+        >
+            <div className="home-header-container">
+                <h1 className="home-header">
+                    {isLoadingRecommendation ? (
+                        "음악을 추천하고 있습니다..."
+                    ) : musicRecommendation ? (
+                        getFormattedEmojiText(musicRecommendation)
+                    ) : (
+                        "☁️ + 🌇 + 🌿 in Paris... = Lo-Fi"
+                    )}
+                </h1>
+                <button className="logout-button" onClick={handleLogout}>
+                    로그아웃
+                </button>
+            </div>
 
             <div className="home-content">
                 <div className="youtube-box">
-                    <iframe width="1280" height="720" src="https://www.youtube.com/embed/edbIsqPlJ8w?si=5gW_M3L07jUtOznr" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+                    {isLoadingRecommendation ? (
+                        <div className="loading-placeholder">
+                            <p>음악을 로딩 중...</p>
+                        </div>
+                    ) : musicRecommendation ? (
+                        <iframe 
+                            width="1280" 
+                            height="720" 
+                            src={musicRecommendation.youtubeUrl} 
+                            title="YouTube video player" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen 
+                        />
+                    ) : null}
                 </div>
 
                 <div className="side-box">
                     {selectedPost ? (
-                        <PostDetail post={selectedPost} onBack={() => setSelectedPost(null)} currentUser="user123" />
+                        <PostDetail post={selectedPost} onBack={() => setSelectedPost(null)} currentUser={currentUser} />
                     ) : mode === 'list' ? (
                         <MusicList
                             list={list}
